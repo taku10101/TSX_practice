@@ -1,10 +1,10 @@
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import React from 'react';
 
-
 function Todo(){
     const[inputText,setInputText]=useState("");
+
     //<Todo[]>　ここの配列にはTodoで指定した型、プロパティしか入らないようになる
     const [todos,setTodos]=useState<Todo[]>([]);
 
@@ -38,6 +38,9 @@ const handleSubmit=(e:{ preventDefault: () => void })=>{
     //投稿後空  に戻す
     setInputText(inputText);
     };
+
+
+
 const handleEdit=(id:Number,inputValue:string)=>{
     const newTodos=todos.map((todo)=>{
         if(todo.id===id){
@@ -50,17 +53,21 @@ const handleEdit=(id:Number,inputValue:string)=>{
 
 const handleChecked=(id:Number, checked:boolean)=>{
     const newTodos=todos.map((todo)=>{
-        if(todo.id=== id){
-            todo.checked= !checked;
-        }
+        if(todo.id===id){
+            todo.checked = !checked;
+        };
         return todo;
-})};
+})
+setTodos(newTodos);
+};
 
 //消すやつ
 const handleDelete =(id:number)=>{
     const newTodos = todos.filter((todo)=> todo.id!==id);
     setTodos(newTodos);
 };
+
+
 
 
 
@@ -74,17 +81,13 @@ const handleDelete =(id:number)=>{
                     {/* ボタンが押されたら */}
                 <input type="submit" value="追加" className='submitButton' />
             </form>
-            
+
             <ul>
                 {/* todosの中身をmapで1つずつ取り出してtodoに渡す */}
                 {todos.map((todo)=>(
                     <li key={todo.id}>
-                        <input type="text" onChange={(e)=>{handleEdit(todo.id,e.target.value)}} 
-                        className='inputText'
-                        value={todo.inputValue}
-                        disabled ={todo.checked}/>
-
-                    <input type="checkbox" onChange={()=>{handleChecked(todo.id,todo.checked)}} className='inputText' />
+                    <input type="text" onChange={(e)=>{handleEdit(todo.id,e.target.value)}} className='inputText' value={todo.inputValue} disabled ={todo.checked}/>
+                    <input type="checkbox" onChange={(e)=>{handleChecked(todo.id,todo.checked)}} className='inputText' />
                     <button onClick={()=> handleDelete(todo.id)}>消</button>
                     </li>
                 ))}
