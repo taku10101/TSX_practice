@@ -43,29 +43,33 @@ const handleSubmit=(e:{ preventDefault: () => void })=>{
 
 //編集
 const handleEdit=(id:Number,inputValue:string)=>{
-    const newTodos=todos.map((todo)=>{
-        if(todo.id===id){
-            todo.inputValue=inputValue;
+    const newTodos=todos.map((task)=>{
+
+        if(task.id===id){ //task.id===引数のid
+            task.inputValue=inputValue;
         }
-        return todo;
+        return task;
     });
     setTodos(newTodos);
 };
 
 //チェックボックス
 const handleChecked=(id:Number, checked:boolean)=>{
-    const newTodos=todos.map((todo)=>{
-        if(todo.id===id){
-            todo.checked = !checked;
+    const newTodos=todos.map((task)=>{
+        if(task.id===id){
+            task.checked = !checked;
         };
-        return todo;
+        return task;
 })
 setTodos(newTodos);
 };
 
 //消すやつ
 const handleDelete =(id:number)=>{
-    const newTodos = todos.filter((todo)=> todo.id===id);//filter tureの時だけ返す
+    const newTodos = 
+    //
+    todos.filter((task)=>task.id!==id);//task.id >>全id, id >>選択されているid
+    //filter >> 合致したものだけ(ture)を残す
     
     setTodos(newTodos);
 };
@@ -86,12 +90,12 @@ const handleDelete =(id:number)=>{
             </form>
 
             <ul>
-                {/* todosの中身をmapで1つずつ取り出してtodoに渡す */}
-                {todos.map((todo)=>(
-                    <li key={todo.id}>
-                    <input type="text" onChange={(e)=>{handleEdit(todo.id,e.target.value)}} className='inputText' value={todo.inputValue} disabled ={todo.checked}/>
-                    <input type="checkbox" onChange={(e)=>{handleChecked(todo.id,todo.checked)}} className='inputText' />
-                    <button onClick={()=> handleDelete(todo.id)}>消</button>
+                {/* todosの中身をmapで1つずつ取り出してtaskに渡す */}
+                {todos.map((task)=>(
+                    <li key={task.id}>
+                    <input type="text" onChange={(e)=>{handleEdit(task.id,e.target.value)}} className='inputText' value={task.inputValue} disabled ={task.checked}/>
+                    <input type="checkbox" onChange={(e)=>{handleChecked(task.id,task.checked)}} className='inputText' />
+                    <button onClick={()=> handleDelete(task.id)}>消</button>
                     </li>
                 ))}
             </ul>
