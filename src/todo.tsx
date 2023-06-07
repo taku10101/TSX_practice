@@ -35,12 +35,13 @@ const handleSubmit=(e:{ preventDefault: () => void })=>{
 };
     //作成した物をtodosに追加
     setTodos([newTodo, ...todos]);
-    //投稿後空  に戻す
+
+    //再レンダリング
     setInputText(inputText);
     };
 
 
-
+//編集
 const handleEdit=(id:Number,inputValue:string)=>{
     const newTodos=todos.map((todo)=>{
         if(todo.id===id){
@@ -51,6 +52,7 @@ const handleEdit=(id:Number,inputValue:string)=>{
     setTodos(newTodos);
 };
 
+//チェックボックス
 const handleChecked=(id:Number, checked:boolean)=>{
     const newTodos=todos.map((todo)=>{
         if(todo.id===id){
@@ -63,7 +65,8 @@ setTodos(newTodos);
 
 //消すやつ
 const handleDelete =(id:number)=>{
-    const newTodos = todos.filter((todo)=> todo.id!==id);
+    const newTodos = todos.filter((todo)=> todo.id===id);//filter tureの時だけ返す
+    
     setTodos(newTodos);
 };
 
